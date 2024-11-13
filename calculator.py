@@ -3,26 +3,85 @@ class Calculator:
         return a + b
 
     def subtract(self, a, b):
-        return b - a
+        return a - b
 
     def multiply(self, a, b):
         result = 0
-        for i in range(b+1):
-            result = self.add(result, a)
-        return result
+
+        if b >= 0:
+            for i in range(b):
+                result = self.add(result, a)
+            return result
+        
+        elif b < 0:
+            for i in range(abs(b)):
+                result = self.add(result, a)
+            return (-result)
 
     def divide(self, a, b):
         result = 0
-        while a > b:
-            a = self.subtract(a, b)
-            result += 1
-        return result
-    
-    def modulo(self, a, b):
-        while a <= b:
-            a = a-b
-        return a
 
+        if b == 0:
+            print("Undiviable")
+            return None
+        
+        if a > 0 and b > 0:
+            while a >= b:
+                a = self.subtract(a, b)
+                result += 1
+            return result
+        
+        elif a > 0 and b < 0:
+            while a >= abs(b):
+                a = self.subtract(a, abs(b))
+                result += 1
+            return (-result)
+        
+        elif a < 0 and b > 0:
+            while abs(a) >= b:
+                a = self.subtract(a, b)
+                result += 1
+            return -result
+
+        elif a < 0 and b < 0:
+            while abs(a) >= abs(b):
+                a = self.subtract(a, b)
+                result += 1
+            return result
+
+        elif a == 0:
+            return result
+       
+    def modulo(self, a, b):
+        
+        if b == 0:
+            print("Error: Cannot divide by zero")
+            return None
+
+        if a < abs(b):
+            return a
+
+        if a >= 0 and b > 0:
+            while a >= b:
+                a = a - b
+            return a
+
+        elif a < 0 and b > 0:
+            a = a + b 
+            while a >= b:
+                a = a - b
+            return a
+
+        elif a >= 0 and b < 0:
+            return a
+
+        elif a < 0 and b < 0:
+            a = abs(a)
+            b = abs(b) 
+            while a >= b:
+                a = a - b
+            return -a
+    
 # Example usage:
 if __name__ == "__main__":
     calc = Calculator()
